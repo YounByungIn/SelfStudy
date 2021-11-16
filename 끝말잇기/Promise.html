@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PromiseEx</title>
+</head>
+<body>
+  <script>
+    const one = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("one"), 1000);
+    });
+    const two = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("two"), 2000);
+    });
+    const three = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("three"), 3000);
+    });
+    console.time("a");
+    Promise.all([one, two, three]).then((val) => console.log(val, console.timeEnd("a")));
+    
+  /* 배열 안 모든 프로미스가 이행된 후(약 3초 이후) 각 이행 결과값을 담은 배열을
+    결과값으로 갖는 프로미스 객체가 만들어져
+    콘솔에는 ["one", "two", "three"]가 출력됨.*/
+    console.time("b");
+    Promise.all(["Hi", 123, three]).then((val) => console.log(val, console.timeEnd("b")));
+  /* 배열 안 요소가 반드시 프로미스가 아닌 경우에도 가능함.
+    하지만 이 경우에도 요소 안애 프로미스가 있다면 프로미스가 이행된 이후에 프로미스 객체가 생성됨.*/
+
+    console.log({}==={});
+  </script>
+</body>
+</html>
